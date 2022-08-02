@@ -1,7 +1,5 @@
 var configuracion = require('./configuracion')
 
-console.log(configuracion)
-
 class Persona{
     //constructor
     constructor(primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento){
@@ -13,10 +11,10 @@ class Persona{
         this.contratado = false
         this.horasTrabajadas = 0
         this.identidad = null
+        this.telefonos = null
         this.sueldoBase = configuracion.sueldoBase
 
         this.fechaNacimiento = fechaNacimiento
-        this.edad = new Date() - fechaNacimiento
     }
 
     nombreCompleto(){
@@ -77,11 +75,25 @@ class Persona{
         }
     }
 
+    leerTelefonos(textoConTelefonos){
+        var expresion = /\d{4}-\d{4}/g
+        const resultadoTelefonos = textoConTelefonos.match(expresion)
+        if(resultadoTelefonos.length > 0){
+            this.telefonos = resultadoTelefonos
+            console.log(`El empleado ${this.nombre()} tiene los siguientes numeros de telefono ${JSON.stringify(resultadoTelefonos)}`)
+        }else{
+            this.telefonos = null
+            console.log(`No se encontraron numeros de telefono para ${this.nombre()}`)
+        }
+    }
+
 }
 
+module.exports = Persona
+
+/*
 var persona1 = new Persona("Luke", "Anakin", "Sky", "Walker", new Date(2000, 6, 26));
 var persona2 = new Persona("John", "Jose", "Doe", "Sanchez", new Date());
-
 var persona3 = new Persona()
 
 persona1.contratar(true)
@@ -95,4 +107,7 @@ persona1.trabajar(6)
 persona1.cobrar()
 persona1.asignarIdentidad("000-0000-51233")
 persona1.asignarIdentidad("0000-0000-51233")
+
+persona1.leerTelefonos("Mis numeros de telefono son el 1234-5677, mi segundo telefono es 6242-6234 y mi tercer telefono es 6124-6377")
 //persona1.cobrar()
+*/
